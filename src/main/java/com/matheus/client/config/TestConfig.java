@@ -9,7 +9,7 @@ import com.matheus.client.entities.Bedroom;
 import com.matheus.client.repository.BedroomRepository;
 
 @Configuration
-@Profile("test")
+@Profile("teste")
 public class TestConfig implements CommandLineRunner {
 	
 	@Autowired
