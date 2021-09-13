@@ -7,7 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_bedroom")
@@ -20,6 +24,11 @@ public class Bedroom implements Serializable {
 	private Double value;
 	private Character available;
 	private String description;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "client_id")
+	private Client client;
 	
 	public Bedroom() {
 	}
@@ -62,6 +71,14 @@ public class Bedroom implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
 	}
 
 	@Override
