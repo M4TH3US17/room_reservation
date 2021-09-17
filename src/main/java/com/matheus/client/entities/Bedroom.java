@@ -23,21 +23,26 @@ public class Bedroom implements Serializable {
 	private Long id;
 	private Double value;
 	private Character available;
+	private String imgUrl;
 	private String description;
 	
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "client_id")
-	private Client client;
+	@JoinColumn(name = "reservation_id", nullable = true)
+	private Reservation reservation;
 	
 	public Bedroom() {
 	}
 
-	public Bedroom(Long id, Double value, Character available, String description) {
-		super();
+	public Bedroom(Long id, Double value, Character available, String imgUrl, String description, Reservation reservation) {
+		if(available != 'y' && available != 'n') {
+			throw new IllegalArgumentException("Available attribute is invalid");
+		}
 		this.id = id;
 		this.value = value;
+		this.imgUrl = imgUrl;
 		this.available = available;
+		this.reservation = reservation;
 		this.description = description;
 	}
 
@@ -64,6 +69,14 @@ public class Bedroom implements Serializable {
 	public void setAvailable(Character available) {
 		this.available = available;
 	}
+	
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
 
 	public String getDescription() {
 		return description;
@@ -73,12 +86,12 @@ public class Bedroom implements Serializable {
 		this.description = description;
 	}
 
-	public Client getClient() {
-		return client;
+	public Reservation getReservation() {
+		return reservation;
 	}
 
-	public void setClient(Client client) {
-		this.client = client;
+	public void setReservation(Reservation reservation) {
+		this.reservation = reservation;
 	}
 
 	@Override
