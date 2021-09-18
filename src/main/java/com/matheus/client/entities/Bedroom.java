@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -31,10 +32,14 @@ public class Bedroom implements Serializable {
 	@JoinColumn(name = "reservation_id", nullable = true)
 	private Reservation reservation;
 	
+	@OneToOne
+	@JoinColumn(nullable=false)
+	private Location location;
+	
 	public Bedroom() {
 	}
 
-	public Bedroom(Long id, Double value, Character available, String imgUrl, String description, Reservation reservation) {
+	public Bedroom(Long id, Double value, Character available, String imgUrl, String description, Location location, Reservation reservation) {
 		if(available != 'y' && available != 'n') {
 			throw new IllegalArgumentException("Available attribute is invalid");
 		}
@@ -42,6 +47,7 @@ public class Bedroom implements Serializable {
 		this.value = value;
 		this.imgUrl = imgUrl;
 		this.available = available;
+		this.location = location;
 		this.reservation = reservation;
 		this.description = description;
 	}
@@ -84,6 +90,14 @@ public class Bedroom implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 
 	public Reservation getReservation() {
