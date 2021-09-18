@@ -10,9 +10,11 @@ import org.springframework.context.annotation.Profile;
 
 import com.matheus.client.entities.Bedroom;
 import com.matheus.client.entities.Client;
+import com.matheus.client.entities.Contact;
 import com.matheus.client.entities.Reservation;
 import com.matheus.client.repository.BedroomRepository;
 import com.matheus.client.repository.ClientRepository;
+import com.matheus.client.repository.ContactRepository;
 import com.matheus.client.repository.ReservationRepository;
 
 @Configuration
@@ -25,11 +27,18 @@ public class TestConfig implements CommandLineRunner {
 	private ClientRepository clientRepository;
     @Autowired
     private ReservationRepository reservationRepository;
+    @Autowired
+    private ContactRepository contactRepository;
     
 	@Override
 	public void run(String... args) throws Exception {
-	    Client c1 = new Client(null, "Matheus Dalvino", "(92) 00000-0000");
-		Client c2 = new Client(null, "Pedro Almeida", "(92) 00000-0000");
+	    Client c1 = new Client(null, "Matheus Dalvino", null);
+		Client c2 = new Client(null, "Pedro Almeida", null);
+		clientRepository.saveAll(Arrays.asList(c1, c2));
+		
+		Contact co1 = new Contact(null, "matheusdalvino50@gmail.com", "(92) 99252-3306", c1);
+		c1.setContact(co1);
+		contactRepository.saveAll(Arrays.asList(co1));
 		clientRepository.saveAll(Arrays.asList(c1, c2));
 	
 		Reservation r1 = new Reservation(null, Instant.parse("2021-09-17T13:00:11Z"), Instant.parse("2021-09-28T15:00:11Z"), c1);

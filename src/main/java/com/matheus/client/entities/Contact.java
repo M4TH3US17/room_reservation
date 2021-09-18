@@ -1,47 +1,42 @@
 package com.matheus.client.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "tb_client")
-public class Client implements Serializable {
+@Table(name = "tb_contact")
+public class Contact implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String name;
-	
-	@OneToOne
-	@JoinColumn(name="contact_id",nullable=true)
-	private Contact contact;
+	@Column(nullable=true)
+	private String email;
+	private String number;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "client")
-	private List<Reservation> list = new ArrayList<>();
+	@OneToOne(mappedBy="contact")
+	private Client client;
 	
-	public Client() {
+	public Contact() {
 	}
 
-	public Client(Long id, String name, Contact contact) {
-		super();
+	public Contact(Long id, String email, String number, Client client) {
 		this.id = id;
-		this.name = name;
-		this.contact = contact;
+		this.email = email;
+		this.number = number;
+		this.client = client;
 	}
 
 	public Long getId() {
@@ -52,24 +47,28 @@ public class Client implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public Contact getContact() {
-		return contact;
+	public String getNumber() {
+		return number;
 	}
 
-	public void setContact(Contact contact) {
-		this.contact = contact;
+	public void setNumber(String number) {
+		this.number = number;
 	}
 
-	public List<Reservation> getList() {
-		return list;
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
 	}
 
 	@Override
@@ -85,9 +84,7 @@ public class Client implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Client other = (Client) obj;
+		Contact other = (Contact) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
 }
