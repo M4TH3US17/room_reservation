@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,14 +23,21 @@ public class Location implements Serializable {
 	@Column(length=2)
     private String state;
 	private String city;
+	private String district;
+	
+	@OneToOne
+	@JoinColumn(name="address_id")
+	private Address address;
 	
 	public Location() {
 	}
 	
-	public Location(Long id, String state, String city) {
+	public Location(Long id, String state, String district, String city, Address address) {
 		this.id = id;
 		this.state = state;
+		this.district = district;
 		this.city = city;
+		this.address = address;
 	}
 	
 	public Long getId() {
@@ -46,6 +55,14 @@ public class Location implements Serializable {
 	public void setState(String state) {
 		this.state = state;
 	}
+	
+	public String getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(String district) {
+		this.district = district;
+	}
 
 	public String getCity() {
 		return city;
@@ -53,6 +70,14 @@ public class Location implements Serializable {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	@Override

@@ -31,7 +31,7 @@ public class Bedroom implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "reservation_id", nullable = true)
 	private Reservation reservation;
-	
+
 	@OneToOne
 	@JoinColumn(nullable=false)
 	private Location location;
