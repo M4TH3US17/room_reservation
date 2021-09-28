@@ -13,6 +13,7 @@ import com.matheus.client.entities.Bedroom;
 import com.matheus.client.entities.Client;
 import com.matheus.client.entities.Contact;
 import com.matheus.client.entities.Location;
+import com.matheus.client.entities.Payment;
 import com.matheus.client.entities.Reservation;
 import com.matheus.client.repository.AddressRepository;
 import com.matheus.client.repository.BedroomRepository;
@@ -85,6 +86,9 @@ public class TestConfig implements CommandLineRunner {
 		
 		reservationRepository.saveAll(Arrays.asList(r1, r2, r3));	
 		
+		Payment pay1 = new Payment(null, Instant.parse("2021-09-17T15:01:12Z"), r1);
+		r1.setPayment(pay1);
+		
+		reservationRepository.save(r1);
 	}	
-
 }
