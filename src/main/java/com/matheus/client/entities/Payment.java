@@ -64,7 +64,7 @@ public class Payment implements Serializable {
 	public void setReservation(Reservation reservation) {
 		this.reservation = reservation;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

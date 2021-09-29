@@ -40,7 +40,7 @@ public class TestConfig implements CommandLineRunner {
     private AddressRepository addressRepository;
     
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(String... args) throws Exception { //RESERVA 1 E 2: MATHEUS
 	    Client c1 = new Client(null, "Matheus Dalvino", null);
 		Client c2 = new Client(null, "Pedro Almeida", null);
 		clientRepository.saveAll(Arrays.asList(c1, c2));
@@ -74,15 +74,17 @@ public class TestConfig implements CommandLineRunner {
 		locationRepository.saveAll(Arrays.asList(l1, l2, l3));
 		addressRepository.saveAll(Arrays.asList(a1, a2, a3));
 		
-		Bedroom b1 = new Bedroom(null, 300.00, 'y', "", "3 quartos e 1 banheiro.", l1, r1);
+		Bedroom b1 = new Bedroom(null, 300.00, 'n', "", "3 quartos e 1 banheiro.", l1, r1);
 		Bedroom b2 = new Bedroom(null, 500.00, 'n', "", "4 quartos, 1 banheiro e uma sala de estar.", l1, r2);
 		Bedroom b3 = new Bedroom(null, 200.00, 'n', "", "1 quarto e 1 banheiro.", l2, r3);
-		Bedroom b4 = new Bedroom(null, 200.00, 'n', "", "1 quarto e 2 banheiros", l3, null);
-		bedroomRepository.saveAll(Arrays.asList(b1, b2, b3, b4));
+		Bedroom b4 = new Bedroom(null, 250.00, 'n', "", "1 quarto e 2 banheiros", l3, r1);
+		Bedroom b5 = new Bedroom(null, 800.00, 'y', "", "2 quarto e 2 banheiros", l3, null);
+		bedroomRepository.saveAll(Arrays.asList(b1, b2, b3, b4, b5));
 		
-		r1.getList().add(b1);
 		r2.getList().add(b2);
 		r3.getList().add(b3);
+		r1.getList().add(b1);
+		r1.getList().add(b4);
 		
 		reservationRepository.saveAll(Arrays.asList(r1, r2, r3));	
 		
