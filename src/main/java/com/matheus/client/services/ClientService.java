@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.matheus.client.entities.Client;
 import com.matheus.client.repository.ClientRepository;
+import com.matheus.client.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class ClientService {
@@ -21,7 +22,7 @@ public class ClientService {
 	
 	public Client findById(Long id) {
 		Optional<Client> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public Client insert(Client obj) {
@@ -39,8 +40,12 @@ public class ClientService {
 	}
 
 	private void updateData(Client entity, Client obj) {
-		entity.setName(obj.getName());
-		entity.setContact(obj.getContact());	
+		entity.setName(obj.getName());	
+		if(entity.getContact() == null) {	
+		    	entity.setContact(obj.getContact());
+		} else {
+			entity.getContact().setEmail(obj.getContact().getEmail());
+			entity.getContact().setNumber(obj.getContact().getNumber());
 		}
-		
+		}		
 }
