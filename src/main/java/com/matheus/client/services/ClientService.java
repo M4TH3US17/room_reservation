@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.matheus.client.entities.Client;
 import com.matheus.client.repository.ClientRepository;
+import com.matheus.client.services.exceptions.DatabaseException;
 import com.matheus.client.services.exceptions.ResourceNotFoundException;
 
 @Service
@@ -30,7 +33,13 @@ public class ClientService {
 	}
 	
 	public void delete(Long id) {
-		repository.deleteById(id);
+		try {
+		   	repository.deleteById(id);
+		} catch(DataIntegrityViolationException e) {
+			throw new DatabaseException(e.getMessage());
+		} catch(EmptyResultDataAccessException e2) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 	
 	public Client update(Long id, Client obj) {
